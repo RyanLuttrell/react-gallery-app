@@ -1,5 +1,6 @@
 import React, {Component}from 'react';
-import Photo from './Photo'
+import Photo from './Photo';
+import NotFound from './NotFound';
 
 class PhotoContainer extends Component {
     render() {
