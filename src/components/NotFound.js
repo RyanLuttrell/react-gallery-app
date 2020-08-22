@@ -2,7 +2,10 @@ import React from 'react';
 
 const NotFound = () => {
     return(
-        <h1>Testing Not Found</h1>
+        <li class="not-found">
+            <h3>No Results Found</h3>
+            <p>You search did not return any results. Please try again.</p>
+        </li>
     );
 }
 

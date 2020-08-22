@@ -9,12 +9,15 @@ import './config.js'
 import { render } from '@testing-library/react';
 
 const App = () => (
-  <div>
-      <Nav />
-      <NotFound />
-      <Photo />
+  <div className='container'>
       <SearchForm />
+      <Nav />
       <PhotoContainer />
+      <Photo />
+      <NotFound />
+
+
+
   </div>
 
 );
