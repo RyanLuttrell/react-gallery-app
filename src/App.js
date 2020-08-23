@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Nav from './components/Nav';
 import SearchForm from './components/SearchForm';
 import PhotoContainer from './components/PhotoContainer';
+import Search from './components/Search';
 import './css/index.css';
 import {apiKey} from './config.js'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
@@ -45,6 +46,9 @@ class App extends Component {
         search: response.data.photos.photo
       })
     })
+    .catch(error => {
+      console.log('Error fetching and parsing data', error)
+    })
   }
 
 
@@ -58,7 +62,7 @@ class App extends Component {
             <Route path="/waterfalls" render={() => <PhotoContainer data={this.state.waterfalls}/>}/>
             <Route path="/sunsets" render={() => <PhotoContainer data={this.state.sunsets}/>}/>
             <Route path="/javascript" render={() => <PhotoContainer data={this.state.javascript}/>} />
-            <Route path="/search/:topic" render={() => <PhotoContainer data={this.state.search}/>} />
+            <Route path="/search/:searchTopic" render={() => <Search data={this.state.search}/>} />
           </Switch>
         </div>
     </BrowserRouter>

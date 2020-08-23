@@ -1,17 +1,10 @@
 import React from 'react';
 import Photo from './Photo';
-import NotFound from './NotFound';
 
 const PhotoContainer = props => {
 
     const results = props.data;
-    let photos;
-
-    if (results.length > 0) {
-        photos = results.map(photo => <Photo farm={photo.farm} key={photo.id} secret={photo.secret} server={photo.server} id={photo.id}/>)
-    } else {
-        photos = <NotFound />
-    }
+    const photos = results.map(photo => <Photo farm={photo.farm} key={photo.id} secret={photo.secret} server={photo.server} id={photo.id}/>)
 
         return(
             <div className='photo-container'>
