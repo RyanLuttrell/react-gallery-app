@@ -38,7 +38,7 @@ class App extends Component {
       })
   }
 
-  runSearch(query) {
+  runSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => {
       this.setState({
@@ -55,10 +55,10 @@ class App extends Component {
           <SearchForm  onSearch={this.runSearch}/>
           <Nav />
           <Switch>
-            <Route exact path="/waterfalls" render={() => <PhotoContainer data={this.state.waterfalls}/>}/>
-            <Route exact path="/sunsets" render={() => <PhotoContainer data={this.state.sunsets}/>}/>
-            <Route exact path="/javascript" render={() => <PhotoContainer data={this.state.javascript}/>} />
-            <Route exact path="/javascript/:" render={() => <PhotoContainer data={this.state.search}/>} />
+            <Route path="/waterfalls" render={() => <PhotoContainer data={this.state.waterfalls}/>}/>
+            <Route path="/sunsets" render={() => <PhotoContainer data={this.state.sunsets}/>}/>
+            <Route path="/javascript" render={() => <PhotoContainer data={this.state.javascript}/>} />
+            <Route path="/search/:topic" render={() => <PhotoContainer data={this.state.search}/>} />
           </Switch>
         </div>
     </BrowserRouter>
