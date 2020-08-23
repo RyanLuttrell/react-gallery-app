@@ -6,11 +6,11 @@ import {
 
 const Nav = () => {
     return(
-        <nav class="main-nav">
+        <nav className="main-nav">
             <ul>
-            <li><NavLink to='/computers'>Computers</NavLink></li>
             <li><NavLink to='/waterfalls'>Waterfalls</NavLink></li>
             <li><NavLink to='/sunsets'>Sunsets</NavLink></li>
+            <li><NavLink to='/javascript'>Javascript</NavLink></li>
             </ul>
         </nav>
     );
