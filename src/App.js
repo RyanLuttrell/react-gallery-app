@@ -6,10 +6,11 @@ import SearchForm from './components/SearchForm';
 import PhotoContainer from './components/PhotoContainer';
 import Search from './components/Search';
 import NoPage from './components/NoPage';
+import Home from './components/Home';
 import './css/index.css';
 
 //Import the apiKey from config.js to ensure that no one else can see it
-import {apiKey} from './config.js'
+import apiKey from './config.js'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 //Import Axios to allow for more efficient fetch requests
@@ -23,11 +24,14 @@ class App extends Component {
     javascript: [],
     search: [],
     queryText: '',
-    loading: true
+    loading: false
   }
 
 //Fetches the data for the waterfall images
   componentDidMount() {
+    this.setState({
+      loading: true
+    })
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=waterfalls&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -50,10 +54,16 @@ class App extends Component {
           javascript: response.data.photos.photo
         })
       })
+    this.setState({
+      loading: false
+    })
   }
 
 //Fetches the data and updates the queryText for the search the end user is trying to compelte
   runSearch = (query) => {
+    this.setState({
+      loading: true
+    })
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => {
       this.setState({
@@ -77,6 +87,7 @@ class App extends Component {
           <SearchForm  onSearch={this.runSearch}/>
           <Nav />
           <Switch>
+            <Route exact path="/" render={() => <Home />}/>
             <Route path="/waterfalls" render={() => <PhotoContainer name='Waterfalls' data={this.state.waterfalls}/>}/>
             <Route path="/sunsets" render={() => <PhotoContainer name='Sunsets' data={this.state.sunsets}/>}/>
             <Route path="/javascript" render={() => <PhotoContainer name='JavaScript' data={this.state.javascript}/>} />

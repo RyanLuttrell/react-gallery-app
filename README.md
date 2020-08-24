@@ -66,3 +66,9 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### config.js file
+in order to run this app, you will need to create a config.js file with your own Flickr API key that is formatted like thi:
+
+const apiKey = 'YOUR API KEY';
+export default apiKey;
