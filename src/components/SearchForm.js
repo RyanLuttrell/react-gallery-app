@@ -1,22 +1,33 @@
 import React, {Component} from 'react';
-
+import {withRouter} from 'react-router-dom';
 
 class SearchForm extends Component {
 
+//Set the state of the searchText to an empty string to allow for it being updated when the user enters a search
   state = {
     searchText: ''
   }
 
+//Ensures that key strokes are tracked through the state being updated every time a key is pressed
   onSearchChange = e => {
     this.setState({searchText: e.target.value});
   }
 
-  handleSubmit = (e) => {
+//This function controls what happens when the form in submitted
+  handleSubmit = e => {
+
+//Prevent the page from refresshing on subimt
     e.preventDefault();
     let searchTopic = this.query.value;
-    let path = `search/${searchTopic}`;
-    // this.props.history.push(path);
+    let path = `/search/${searchTopic}`;
+
+//Create a new path in the browser with the path variable to ensure proper rendering of the page and to enable the back button on the browser
+    this.props.history.push(path);
+
+//Call back to the runSearch function in App.js that will fetch the needed data from Flickr's API
     this.props.onSearch(this.state.searchText);
+
+//Reset the text field to make it easier for the user to enter another search
     e.currentTarget.reset();
   }
 
@@ -41,4 +52,5 @@ class SearchForm extends Component {
   }
 }
 
-export default SearchForm;
+//Export the component to allow other components to use it
+export default withRouter(SearchForm);

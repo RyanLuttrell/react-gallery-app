@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
+
+//Import other components to allow this component to use them
 import Nav from './components/Nav';
 import SearchForm from './components/SearchForm';
 import PhotoContainer from './components/PhotoContainer';
 import Search from './components/Search';
+import NoPage from './components/NoPage';
 import './css/index.css';
+
+//Import the apiKey from config.js to ensure that no one else can see it
 import {apiKey} from './config.js'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+//Import Axios to allow for more efficient fetch requests
 import axios from 'axios';
 
 class App extends Component {
@@ -14,10 +21,12 @@ class App extends Component {
     waterfalls: [],
     sunsets: [],
     javascript: [],
-    search: []
+    search: [],
+    queryText: '',
+    loading: true
   }
 
-
+//Fetches the data for the waterfall images
   componentDidMount() {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=waterfalls&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
@@ -25,12 +34,16 @@ class App extends Component {
           waterfalls: response.data.photos.photo
         })
       })
+
+//Fetches the data for the sunsets images
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=sunsets&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
           sunsets: response.data.photos.photo
         })
       })
+
+//Fetches the data for the JavaScript images
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=javascript&per_page=24&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -39,13 +52,18 @@ class App extends Component {
       })
   }
 
+//Fetches the data and updates the queryText for the search the end user is trying to compelte
   runSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(response => {
       this.setState({
-        search: response.data.photos.photo
+        search: response.data.photos.photo,
+        queryText: query,
+        loading: false
       })
     })
+
+//Console any errors that may occur in the fetch process to the console
     .catch(error => {
       console.log('Error fetching and parsing data', error)
     })
@@ -59,10 +77,11 @@ class App extends Component {
           <SearchForm  onSearch={this.runSearch}/>
           <Nav />
           <Switch>
-            <Route path="/waterfalls" render={() => <PhotoContainer data={this.state.waterfalls}/>}/>
-            <Route path="/sunsets" render={() => <PhotoContainer data={this.state.sunsets}/>}/>
-            <Route path="/javascript" render={() => <PhotoContainer data={this.state.javascript}/>} />
-            <Route path="/search/:searchTopic" render={() => <Search data={this.state.search}/>} />
+            <Route path="/waterfalls" render={() => <PhotoContainer name='Waterfalls' data={this.state.waterfalls}/>}/>
+            <Route path="/sunsets" render={() => <PhotoContainer name='Sunsets' data={this.state.sunsets}/>}/>
+            <Route path="/javascript" render={() => <PhotoContainer name='JavaScript' data={this.state.javascript}/>} />
+            <Route path="/search/:searchTopic" render={() => <Search data={this.state.search} queryText={this.state.queryText} loading={this.state.loading}/>} />
+            <Route render={() => <NoPage/>} />
           </Switch>
         </div>
     </BrowserRouter>
