@@ -1,5 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### To run this app, follow these instructions
+1. Download all files from GitHub and unzip them onto your computer
+2. Run npm install in the terminal within this folder to install all of the dependencies
+3. Sign up for a free Flickr API Key at (https://www.flickr.com/services/api/)
+4. Create a config.js file in the src folder of the project
+5. Format the config.js file as:
+    const apiKey = 'INSERT YOUR API KEY HERE';
+    export default apiKey;
+6. Run npm start in your terminal within the folder to start the app
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -66,9 +76,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-### config.js file
-in order to run this app, you will need to create a config.js file with your own Flickr API key that is formatted like thi:
-
-const apiKey = 'YOUR API KEY';
-export default apiKey;
